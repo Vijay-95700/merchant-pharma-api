@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using PhamacyCollege.Application.IServices;
+using PhamacyCollege.Application.Services;
+using PharmacyCollege.Infrastructure.DBContext;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Dependency Injection
+builder.Services.AddScoped<IFacultyService, FacultyService>();
+builder.Services.AddDbContext<PharmacyCollegeDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
